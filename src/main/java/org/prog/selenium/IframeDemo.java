@@ -9,7 +9,7 @@ public class IframeDemo {
 
   public static void main(String[] args) {
     WebDriver driver = null;
-    try{
+    try {
       driver = new ChromeDriver();
       driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_iframe");
       driver.findElement(By.id("accept-choices")).click();
@@ -21,7 +21,7 @@ public class IframeDemo {
       System.out.println(driver.findElement(By.tagName("h1")).getText());
       driver.switchTo().defaultContent();
     } finally {
-      if (driver != null ){
+      if (driver != null) {
         driver.quit();
       }
     }

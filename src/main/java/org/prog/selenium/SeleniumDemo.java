@@ -19,10 +19,7 @@ public class SeleniumDemo {
 
       driver.get("https://google.com/");
 
-      List<WebElement> buttons = driver.findElements(By.tagName("button"));
-      if (buttons.size() == 5) {
-        buttons.get(3).click();
-      }
+
 
       WebElement searchBar = driver.findElement(By.name("q"));
       searchBar.sendKeys("Elon Musk");
