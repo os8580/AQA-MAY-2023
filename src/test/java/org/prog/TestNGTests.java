@@ -39,6 +39,7 @@ public class TestNGTests {
     return new Object[][] {
         {"Elon Musk", 1},
         {"Margot Robbie", 1},
+        {"Merlin Manson", 1},
         {"Jimi Hendrix", 1}
     };
   }
