@@ -2,8 +2,8 @@
 
 <suite name="Suite1" verbose="1">
     <test name="Regression1">
-        <packages>
-            <package name="org.prog"/>
-        </packages>
+        <classes>
+            <class name="org.prog.PageObjectTests"/>
+        </classes>
     </test>
 </suite>

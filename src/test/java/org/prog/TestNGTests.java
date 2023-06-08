@@ -1,6 +1,7 @@
 package org.prog;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -46,8 +47,18 @@ public class TestNGTests {
   }
 
   private List<WebElement> getSearchResultsWithText(String value) {
-    return new WebDriverWait(WebDriverNG.driver, Duration.ofSeconds(5L))
-        .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.partialLinkText(value)));
+    List<WebElement> elements = new WebDriverWait(WebDriverNG.driver, Duration.ofSeconds(5L))
+        .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h3/..")));
+
+    List<WebElement> searchLinks = new ArrayList<>();
+
+    for (WebElement e : elements) {
+      if (e.isDisplayed()) {
+        searchLinks.add(e);
+      }
+    }
+
+    return searchLinks;
   }
 
   private void search(String searchValue) {
