@@ -60,9 +60,20 @@ public class RozetkaPage extends AbstractPage {
 
     public void clickAddToCartButton() {
         WebElement firstProduct = getSearchResults().get(0);
-        WebElement addToCartButton = firstProduct.findElement(By.cssSelector(".buy-button"));
+        WebElement addToCartButton = firstProduct.findElement(By.cssSelector(".catalog-grid__cell:nth-child(1) .goods-tile__prices:nth-child(7) svg:nth-child(1)"));
         addToCartButton.click();
     }
+
+    public void openCart () {
+        driver.findElement(By.cssSelector(".catalog-grid__cell:nth-child(1) .goods-tile__prices:nth-child(7) svg:nth-child(1)")).click();
+    }
+    public void waitForTextVisibility(String text) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), '" + text + "')]")));
+    }
+
+
+
 
 
 
