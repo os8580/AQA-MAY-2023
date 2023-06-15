@@ -86,13 +86,17 @@ public class RozetkaPage extends AbstractPage {
     }
 
     public void increaseProductQuantity() {
+        String initialPrice = getCartTotalPrice();
         WebElement quantityIncreaseButton = driver.findElement(By.cssSelector("button[aria-label='Добавить ещё один товар']"));
         quantityIncreaseButton.click();
+        waitForCartTotalPriceToChange(initialPrice);
     }
 
     public void decreaseProductQuantity() {
+        String initialPrice = getCartTotalPrice();
         WebElement quantityDecreaseButton = driver.findElement(By.cssSelector("button[aria-label='Убрать один товар']"));
         quantityDecreaseButton.click();
+        waitForCartTotalPriceToChange(initialPrice);
     }
 
     public int getProductQuantity() {
@@ -105,6 +109,16 @@ public class RozetkaPage extends AbstractPage {
         WebElement productPriceElement = driver.findElement(By.cssSelector("div[class='cart-receipt__sum-price']"));
         String productPriceText = productPriceElement.getText().replaceAll("\\D+", ""); // Remove non-numeric characters
         return Integer.parseInt(productPriceText);
+    }
+
+    private String getCartTotalPrice() {
+        WebElement totalPriceElement = driver.findElement(By.cssSelector("div[class*='sum-price']"));
+        return totalPriceElement.getText();
+    }
+
+    private void waitForCartTotalPriceToChange(String initialPrice) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector("div[class*='sum-price']"), initialPrice)));
     }
     
     

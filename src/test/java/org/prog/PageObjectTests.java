@@ -2,10 +2,7 @@ package org.prog;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.prog.pages.GooglePage;
-import org.prog.pages.PageFactory;
-import org.prog.pages.Pages;
-import org.prog.pages.RozetkaPage;
+import org.prog.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -14,6 +11,8 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.prog.WebDriverNG.driver;
 
 public class PageObjectTests {
 
@@ -72,6 +71,7 @@ public class PageObjectTests {
 // Adding one more instance of the product
         rozetkaPage.increaseProductQuantity();
 
+
         int increasedQuantity = rozetkaPage.getProductQuantity();
         double increasedPrice = rozetkaPage.getProductPriceNumeric();
 
@@ -86,9 +86,6 @@ public class PageObjectTests {
 
         Assert.assertEquals(decreasedQuantity, initialQuantity, "Product quantity did not decrease by 1.");
         Assert.assertEquals(decreasedPrice, initialPrice, "Product price did not return to the initial value after removing an instance.");
-
-
-
 
 
 
