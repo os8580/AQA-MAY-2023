@@ -19,6 +19,7 @@ public class PageObjectTests {
 
     private PageFactory pageFactory;
 
+
     @BeforeSuite
     public void setupDriver() {
         pageFactory = new PageFactory(new ChromeDriver());
@@ -63,8 +64,29 @@ public class PageObjectTests {
 
         Assert.assertEquals(productDetailsInCart, productDetails, "Product details in the cart do not match the selected product details!");
 
+
+        /////////////
+        int initialQuantity = rozetkaPage.getProductQuantity();
+        double initialPrice = rozetkaPage.getProductPriceNumeric();
+
+// Adding one more instance of the product
         rozetkaPage.increaseProductQuantity();
+
+        int increasedQuantity = rozetkaPage.getProductQuantity();
+        double increasedPrice = rozetkaPage.getProductPriceNumeric();
+
+        Assert.assertEquals(increasedQuantity, initialQuantity + 1, "Product quantity did not increase by 1.");
+        Assert.assertTrue(increasedPrice > initialPrice, "Product price did not increase after adding another instance.");
+
+// Removing one instance of the product
         rozetkaPage.decreaseProductQuantity();
+
+        int decreasedQuantity = rozetkaPage.getProductQuantity();
+        double decreasedPrice = rozetkaPage.getProductPriceNumeric();
+
+        Assert.assertEquals(decreasedQuantity, initialQuantity, "Product quantity did not decrease by 1.");
+        Assert.assertEquals(decreasedPrice, initialPrice, "Product price did not return to the initial value after removing an instance.");
+
 
 
 

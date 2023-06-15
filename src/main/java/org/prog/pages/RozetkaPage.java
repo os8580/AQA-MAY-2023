@@ -12,6 +12,8 @@ public class RozetkaPage extends AbstractPage {
 
     private static final String URL = "https://rozetka.com.ua/";
 
+
+
     public RozetkaPage(WebDriver driver) {
         super(driver, URL);
         this.driver = driver;
@@ -92,6 +94,22 @@ public class RozetkaPage extends AbstractPage {
         WebElement quantityDecreaseButton = driver.findElement(By.cssSelector("button[aria-label='Убрать один товар']"));
         quantityDecreaseButton.click();
     }
+
+    public int getProductQuantity() {
+        WebElement quantityElement = driver.findElement(By.cssSelector("[data-testid = 'cart-counter-input']"));
+        String quantityText = quantityElement.getAttribute("value");
+        return Integer.parseInt(quantityText);
+    }
+
+    public int getProductPriceNumeric() {
+        WebElement productPriceElement = driver.findElement(By.cssSelector("div[class='cart-receipt__sum-price']"));
+        String productPriceText = productPriceElement.getText().replaceAll("\\D+", ""); // Remove non-numeric characters
+        return Integer.parseInt(productPriceText);
+    }
+    
+    
+
+
 
 
 }
