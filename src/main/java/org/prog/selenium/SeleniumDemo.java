@@ -20,7 +20,6 @@ public class SeleniumDemo {
       driver.get("https://google.com/");
 
 
-
       WebElement searchBar = driver.findElement(By.name("q"));
       searchBar.sendKeys("Elon Musk");
       searchBar.sendKeys(Keys.ENTER);

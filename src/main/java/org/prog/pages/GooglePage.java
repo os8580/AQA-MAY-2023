@@ -1,9 +1,8 @@
 package org.prog.pages;
 
-import com.beust.ah.A;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -38,17 +37,10 @@ public class GooglePage extends AbstractPage {
   }
 
   public List<WebElement> getSearchResults() {
-    List<WebElement> elements = new WebDriverWait(driver, Duration.ofSeconds(5L))
-        .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h3/..")));
-
-    List<WebElement> searchLinks = new ArrayList<>();
-
-    for (WebElement e : elements) {
-      if (e.isDisplayed()) {
-        searchLinks.add(e);
-      }
-    }
-
-    return searchLinks;
+   return new WebDriverWait(driver, Duration.ofSeconds(5L))
+        .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h3/..")))
+       .stream()
+       .filter(WebElement::isDisplayed)
+       .collect(Collectors.toList());
   }
 }
