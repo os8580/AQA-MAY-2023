@@ -2,6 +2,7 @@ package org.prog;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.prog.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
@@ -18,16 +19,20 @@ public class PageObjectTests {
 
     private PageFactory pageFactory;
 
-
     @BeforeSuite
     public void setupDriver() {
-        pageFactory = new PageFactory(new ChromeDriver());
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized"); // Add argument to start Chrome in maximized window
+        pageFactory = new PageFactory(new ChromeDriver(options));
     }
 
     @Test
     public void testGoogleUsingPageObjectWithChrome() {
+        // Create instances of page objects
         GooglePage googlePage = (GooglePage) pageFactory.get(Pages.GOOGLE);
         RozetkaPage rozetkaPage = (RozetkaPage) pageFactory.get(Pages.ROZETKA);
+
+        // Perform Google search
         googlePage.loadPage();
         googlePage.acceptCookiesIfPresent();
         googlePage.setSearchValue("rozetka ua");
@@ -35,6 +40,8 @@ public class PageObjectTests {
         List<WebElement> searchResults = googlePage.getSearchResults();
         Assert.assertTrue(searchResults.size() > 1, "No search results found!");
         searchResults.get(0).click();
+
+        // Perform Rozetka search
         Assert.assertTrue(rozetkaPage.isPageLoaded());
         rozetkaPage.setSearchValue("Iphone");
         rozetkaPage.performSearch();
@@ -42,12 +49,13 @@ public class PageObjectTests {
         List<WebElement> searchResultsRozetka = rozetkaPage.getSearchResults();
         Assert.assertFalse(searchResultsRozetka.isEmpty(), "No search results found on Rozetka page!");
 
-
+        // Get product details from the page
         Map<String, Object> productDetails = new HashMap<>();
         productDetails.put("name", rozetkaPage.getProductName());
-        String productPrice = rozetkaPage.getProductPrice().replaceAll("\\D", ""); // Удаляем все нечисловые символы
+        String productPrice = rozetkaPage.getProductPrice().replaceAll("\\D", ""); // Remove non-numeric characters
         productDetails.put("price", Integer.parseInt(productPrice));
 
+        // Add the product to the cart
         rozetkaPage.clickAddToCartButton();
         rozetkaPage.waitForTextVisibility("Товар добавлен в корзину");
         rozetkaPage.openCart();
@@ -55,42 +63,48 @@ public class PageObjectTests {
         Assert.assertTrue(rozetkaPage.isTextPresent("31 499"), "Text '31 499' not found on the page.");
         Assert.assertTrue(rozetkaPage.isTextPresent("(MLPF3HU/A)"), "Text '(MLPF3HU/A)' not found on the page.");
 
+        // Get product details from the cart
         Map<String, Object> productDetailsInCart = new HashMap<>();
         productDetailsInCart.put("name", rozetkaPage.getCartProductName());
-        String productPriceInCart = rozetkaPage.getCartProductPrice().replaceAll("\\D+", ""); // Удаляем все нечисловые символы
+        String productPriceInCart = rozetkaPage.getCartProductPrice().replaceAll("\\D+", ""); // Remove non-numeric characters
         productDetailsInCart.put("price", Integer.parseInt(productPriceInCart));
 
-
+        // Verify that product details in the cart match the selected product details
         Assert.assertEquals(productDetailsInCart, productDetails, "Product details in the cart do not match the selected product details!");
 
-
-        /////////////
+        // Get initial quantity and price of the product
         int initialQuantity = rozetkaPage.getProductQuantity();
-        double initialPrice = rozetkaPage.getProductPriceNumeric();
+        int initialPrice = rozetkaPage.getProductPriceNumeric();
 
-// Adding one more instance of the product
+        // Increase product quantity by 1
         rozetkaPage.increaseProductQuantity();
-
-
         int increasedQuantity = rozetkaPage.getProductQuantity();
-        double increasedPrice = rozetkaPage.getProductPriceNumeric();
+        int increasedPrice = rozetkaPage.getProductPriceNumeric();
 
+        // Verify that product quantity increased by 1 and price increased after adding another instance
         Assert.assertEquals(increasedQuantity, initialQuantity + 1, "Product quantity did not increase by 1.");
         Assert.assertTrue(increasedPrice > initialPrice, "Product price did not increase after adding another instance.");
 
-// Removing one instance of the product
+        // Decrease product quantity by 1
         rozetkaPage.decreaseProductQuantity();
-
         int decreasedQuantity = rozetkaPage.getProductQuantity();
-        double decreasedPrice = rozetkaPage.getProductPriceNumeric();
+        int decreasedPrice = rozetkaPage.getProductPriceNumeric();
 
+        // Verify that product quantity decreased by 1 and price returned to the initial value after removing an instance
         Assert.assertEquals(decreasedQuantity, initialQuantity, "Product quantity did not decrease by 1.");
         Assert.assertEquals(decreasedPrice, initialPrice, "Product price did not return to the initial value after removing an instance.");
 
+        // Increase product quantity by 3
+        rozetkaPage.increaseProductQuantity();
+        rozetkaPage.increaseProductQuantity();
+        rozetkaPage.increaseProductQuantity();
+        int increasedQuantityByThree = rozetkaPage.getProductQuantity();
+        int increasedPriceByThree = rozetkaPage.getProductPriceNumeric();
 
-
-
-
+        // Verify that product quantity increased by 3 and price is equal to the expected value
+        System.out.println(increasedQuantityByThree);
+        Assert.assertEquals(increasedQuantityByThree, 4);
+        Assert.assertEquals(increasedPriceByThree, 125996);
     }
 
     @AfterSuite
