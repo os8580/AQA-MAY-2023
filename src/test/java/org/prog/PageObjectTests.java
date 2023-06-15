@@ -102,7 +102,6 @@ public class PageObjectTests {
         int increasedPriceByThree = rozetkaPage.getProductPriceNumeric();
 
         // Verify that product quantity increased by 3 and price is equal to the expected value
-        System.out.println(increasedQuantityByThree);
         Assert.assertEquals(increasedQuantityByThree, 4);
         Assert.assertEquals(increasedPriceByThree, 125996);
     }
