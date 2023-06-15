@@ -52,9 +52,28 @@ public class PageObjectTests {
         rozetkaPage.waitForTextVisibility("Товар добавлен в корзину");
         rozetkaPage.openCart();
         rozetkaPage.waitForTextVisibility("Вместе дешевле");
-        System.out.println("Корзина открылась");
         Assert.assertTrue(rozetkaPage.isTextPresent("31 499"), "Text '31 499' not found on the page.");
         Assert.assertTrue(rozetkaPage.isTextPresent("(MLPF3HU/A)"), "Text '(MLPF3HU/A)' not found on the page.");
+
+        Map<String, Object> productDetailsInCart = new HashMap<>();
+        productDetailsInCart.put("name", rozetkaPage.getCartProductName());
+        String productPriceInCart = rozetkaPage.getCartProductPrice().replaceAll("\\D+", ""); // Удаляем все нечисловые символы
+        productDetailsInCart.put("price", Integer.parseInt(productPriceInCart));
+
+
+        Assert.assertEquals(productDetailsInCart, productDetails, "Product details in the cart do not match the selected product details!");
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

@@ -6,7 +6,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RozetkaPage extends AbstractPage {
 
@@ -71,6 +73,18 @@ public class RozetkaPage extends AbstractPage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), '" + text + "')]")));
     }
+
+    public String getCartProductName() {
+        WebElement productNameElement = driver.findElement(By.cssSelector(".cart-product__title"));
+        return productNameElement.getText();
+    }
+
+    public String getCartProductPrice() {
+        WebElement productPriceElement = driver.findElement(By.cssSelector("body > app-root:nth-child(1) > rz-single-modal-window:nth-child(2) > div:nth-child(3) > div:nth-child(2) > rz-shopping-cart:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > span:nth-child(1)"));
+        return productPriceElement.getText();
+    }
+
+
 
 
 
