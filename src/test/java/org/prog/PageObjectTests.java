@@ -63,12 +63,8 @@ public class PageObjectTests {
 
         Assert.assertEquals(productDetailsInCart, productDetails, "Product details in the cart do not match the selected product details!");
 
-
-
-
-
-
-
+        rozetkaPage.increaseProductQuantity();
+        rozetkaPage.decreaseProductQuantity();
 
 
 

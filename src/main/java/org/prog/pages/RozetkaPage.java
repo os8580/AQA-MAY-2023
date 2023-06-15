@@ -6,9 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RozetkaPage extends AbstractPage {
 
@@ -66,9 +64,10 @@ public class RozetkaPage extends AbstractPage {
         addToCartButton.click();
     }
 
-    public void openCart () {
+    public void openCart() {
         driver.findElement(By.cssSelector(".catalog-grid__cell:nth-child(1) .goods-tile__prices:nth-child(7) svg:nth-child(1)")).click();
     }
+
     public void waitForTextVisibility(String text) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), '" + text + "')]")));
@@ -84,14 +83,15 @@ public class RozetkaPage extends AbstractPage {
         return productPriceElement.getText();
     }
 
+    public void increaseProductQuantity() {
+        WebElement quantityIncreaseButton = driver.findElement(By.cssSelector("button[aria-label='Добавить ещё один товар']"));
+        quantityIncreaseButton.click();
+    }
 
-
-
-
-
-
-
-
+    public void decreaseProductQuantity() {
+        WebElement quantityDecreaseButton = driver.findElement(By.cssSelector("button[aria-label='Убрать один товар']"));
+        quantityDecreaseButton.click();
+    }
 
 
 }
