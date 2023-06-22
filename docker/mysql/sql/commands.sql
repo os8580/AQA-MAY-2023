@@ -55,3 +55,5 @@ SELECT COUNT(*) from Persons where FirstName = 'Doe';
 SELECT DISTINCT (FirstName) from Persons;
 
 select FirstName as 'Clients Name' FROM Persons;
+
+delete from Persons where LastName = 'User';

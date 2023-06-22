@@ -1,29 +1,24 @@
 Feature: First google tests
 
-  Scenario: my first google test
-    Given I load google page
-    When i search for "Ryan Reynolds"
-    Then i see word "Ryan Reynolds" in search hyperlinks
+#  Scenario: my first google test
 
-  Scenario Outline: my first google test
-    Given sample step
-    When sample when <value>
-    Then sample then <value>
-    Then I use multiple params <value> and <int_value>
-    Given sample enum step SEARCH_INPUT
-    Given sample list step:
-      | "a" |
-      | "b" |
-      | "c" |
-      | "d" |
-      | "e" |
-    Given sample map step:
-      | "username" | "admin"          |
-      | "password" | "admin"          |
-      | "email"    | "admin@prog.org" |
-      | "phone"    | "+456789123456"  |
-    Examples:
-      | value    | int_value |
-      | "a test" | 1         |
-      | "b test" | 2         |
-      | "c test" | 3         |
+  Scenario: my SQL test
+    Given Get 1 random users from Web as "userGroup 1"
+    Given Get 2 random users from Web as "userGroup 2"
+    Given Get 3 random users from Web as "userGroup 3"
+    Given I store "userGroup 2" in DB
+    Given Get random user from group "userGroup 3" as "person 1"
+    Given Get random user from DB as "person 2"
+    Given Get random user from DB as "person 3"
+
+    Given I load google page
+    When i search for "person 1"
+    Then i see name of "person 1" in search hyperlinks
+
+    Given I load google page
+    When i search for "person 2"
+    Then i see name of "person 2" in search hyperlinks
+
+    Given I load google page
+    When i search for "person 3"
+    Then i see name of "person 3" in search hyperlinks
