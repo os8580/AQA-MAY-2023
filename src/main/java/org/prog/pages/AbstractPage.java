@@ -23,4 +23,10 @@ public abstract class AbstractPage {
   public boolean isPageLoaded() {
     return new WebDriverWait(driver, Duration.ofSeconds(45L)).until(ExpectedConditions.urlToBe(URL));
   }
+
+  public void quitDriver() {
+    if (driver != null) {
+      driver.quit();
+    }
+  }
 }

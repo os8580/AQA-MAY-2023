@@ -3,7 +3,7 @@
 <suite name="Suite1" verbose="1">
     <test name="Regression1">
         <classes>
-            <class name="org.prog.PageObjectTests"/>
+            <class name="org.prog.cucumber.CucumberTestRunner"/>
         </classes>
     </test>
 </suite>

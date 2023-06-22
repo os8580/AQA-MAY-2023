@@ -37,10 +37,17 @@ public class GooglePage extends AbstractPage {
   }
 
   public List<WebElement> getSearchResults() {
-   return new WebDriverWait(driver, Duration.ofSeconds(5L))
+    return new WebDriverWait(driver, Duration.ofSeconds(5L))
         .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h3/..")))
-       .stream()
-       .filter(WebElement::isDisplayed)
-       .collect(Collectors.toList());
+        .stream()
+        .filter(WebElement::isDisplayed)
+        .collect(Collectors.toList());
+  }
+
+  public void waitForSearchSuggestions() {
+    new WebDriverWait(driver, Duration.ofSeconds(2L))
+        .until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//*[@role='listbox']")
+        ));
   }
 }
