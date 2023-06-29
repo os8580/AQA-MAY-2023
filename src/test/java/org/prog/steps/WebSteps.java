@@ -80,7 +80,7 @@ public class WebSteps {
     }
 
     private static URL getSelenoidUrl() throws UnknownHostException, MalformedURLException {
-        if (Inet4Address.getLocalHost().getHostName().contains("jenkins")) {
+        if (Inet4Address.getLocalHost().getHostAddress().startsWith("172")) {
             return new URL("http://selenoid-selenoid-1:4444/wd/hub");
         } else {
             return new URL("http://localhost:4444/wd/hub");
