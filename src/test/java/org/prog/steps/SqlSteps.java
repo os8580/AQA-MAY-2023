@@ -90,7 +90,7 @@ public class SqlSteps {
     }
 
     private String getDBHost() throws UnknownHostException {
-        if (Inet4Address.getLocalHost().getHostName().contains("jenkins")) {
+        if (Inet4Address.getLocalHost().getHostAddress().startsWith("172")) {
             return "jdbc:mysql://mysql-db-1:3306/db";
         } else {
             return "jdbc:mysql://localhost:3306/db";
