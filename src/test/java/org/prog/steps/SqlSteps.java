@@ -28,7 +28,7 @@ public class SqlSteps {
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
 
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "user", "password");
+      Connection con = DriverManager.getConnection("jdbc:mysql://mysql-db-1:3306/db", "user", "password");
       Statement stmt = con.createStatement();
 
       String query = "select * from Persons";
@@ -55,7 +55,7 @@ public class SqlSteps {
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
 
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "user", "password");
+      Connection con = DriverManager.getConnection("jdbc:mysql://mysql-db-1:3306/db", "user", "password");
       Statement stmt = con.createStatement();
 
       String query = "insert into Persons (Title, FirstName, LastName) VALUES ('%s', '%s', '%s')";

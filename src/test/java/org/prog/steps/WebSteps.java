@@ -31,7 +31,7 @@ public class WebSteps {
 
     @BeforeAll
     public static void setupPage() throws MalformedURLException {
-        googlePage = new GooglePage(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options()));
+        googlePage = new GooglePage(new RemoteWebDriver(new URL("http://selenoid-selenoid-1:4444/wd/hub"), options()));
     }
 
     @AfterAll
