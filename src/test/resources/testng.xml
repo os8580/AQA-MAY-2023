@@ -3,8 +3,8 @@
 <suite name="Suite1" verbose="1">
     <test name="Regression1">
         <classes>
-<!--            <class name="org.prog.cucumber.CucumberTestRunner"/>-->
-            <class name="org.prog.tests.AllureDemo"/>
+            <class name="org.prog.cucumber.CucumberTestRunner"/>
+<!--            <class name="org.prog.tests.AllureDemo"/>-->
         </classes>
     </test>
 </suite>
