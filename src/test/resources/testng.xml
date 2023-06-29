@@ -4,6 +4,7 @@
     <test name="Regression1">
         <classes>
             <class name="org.prog.cucumber.CucumberTestRunner"/>
+            <class name="org.prog.tests.AllureDemo"/>
         </classes>
     </test>
 </suite>
