@@ -2,16 +2,18 @@ package org.prog.steps;
 
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.BeforeAll;
-import io.cucumber.java.be.I;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.enums.BrowserType;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.prog.dto.NameDto;
 import org.prog.pages.GooglePage;
+import org.prog.pages.PageFactory;
+import org.prog.pages.Pages;
 import org.util.DataHolder;
+import org.util.WebDriverFactory;
 
 import java.net.Inet4Address;
 import java.net.MalformedURLException;
@@ -33,8 +35,8 @@ public class WebSteps {
     private static GooglePage googlePage;
 
     @BeforeAll
-    public static void setupPage() throws MalformedURLException, UnknownHostException {
-        googlePage = new GooglePage(new RemoteWebDriver(getSelenoidUrl(), options()));
+    public static void setupPage() {
+        googlePage = (GooglePage) PageFactory.get(Pages.GOOGLE);
     }
 
     @AfterAll

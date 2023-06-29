@@ -5,7 +5,6 @@ import org.prog.dto.NameDto;
 import org.testng.Assert;
 import org.util.DataHolder;
 
-import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -89,8 +88,9 @@ public class SqlSteps {
         return names.get(RANDOM.nextInt(names.size()));
     }
 
-    private String getDBHost() throws UnknownHostException {
-        if (Inet4Address.getLocalHost().getHostAddress().startsWith("172")) {
+    private String getDBHost() {
+//        if (Inet4Address.getLocalHost().getHostAddress().startsWith("172")) {
+        if (System.getProperty("driver.type", "CHROME_DOCKER").equals("CHROME_DOCKER")) {
             return "jdbc:mysql://mysql-db-1:3306/db";
         } else {
             return "jdbc:mysql://localhost:3306/db";
