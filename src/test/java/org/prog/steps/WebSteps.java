@@ -5,7 +5,7 @@ import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.enums.BrowserType;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.prog.dto.NameDto;
@@ -13,7 +13,6 @@ import org.prog.pages.GooglePage;
 import org.prog.pages.PageFactory;
 import org.prog.pages.Pages;
 import org.util.DataHolder;
-import org.util.WebDriverFactory;
 
 import java.net.Inet4Address;
 import java.net.MalformedURLException;
@@ -42,6 +41,21 @@ public class WebSteps {
     @AfterAll
     public static void tearDown() {
         googlePage.quitDriver();
+    }
+
+    @SneakyThrows
+    @Given("A new tab is opened")
+    public void openNewTab() {
+        if (true) {
+            System.out.println("aaaa");
+        }
+        String initialHandle = googlePage.openNewTab();
+        String newTab = googlePage.openNewTab();
+        String newWindow = googlePage.openNewWindow();
+        googlePage.gethandles().forEach(System.out::println);
+        googlePage.switchToTab(initialHandle);
+        googlePage.minimize();
+        Thread.sleep(1000);
     }
 
     @Given("I load google page")

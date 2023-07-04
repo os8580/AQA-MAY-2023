@@ -1,6 +1,7 @@
 package org.prog.steps;
 
 import io.cucumber.java.en.Given;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import java.util.stream.Collectors;
 import org.prog.dto.SearchResultDto;
@@ -8,6 +9,7 @@ import org.util.DataHolder;
 
 public class RestSteps {
 
+  @Step("test step")
   @Given("Get {int} random users from Web as {string}")
   public void getRandomUsersFromWeb(int amount, String alias) {
     String baseRequest = "https://randomuser.me/api/?inc=gender,name,nat&noinfo&results=%s";

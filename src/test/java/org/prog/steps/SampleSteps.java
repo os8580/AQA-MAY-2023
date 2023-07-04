@@ -1,47 +1,38 @@
 package org.prog.steps;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import org.enums.GoogleSelectors;
+import lombok.SneakyThrows;
+import org.checkerframework.checker.units.qual.C;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.util.WebDriverFactory;
+
+import java.util.Random;
 
 public class SampleSteps {
+    private long sleepDuration;
 
+    private static final ThreadLocal<WebDriver> webDriverLocal = ThreadLocal.withInitial(WebDriverFactory::getDriver);
 
-  @When("sample when {string}")
-  public void sampleWhen(String value) {
-    System.out.println("I'm searching for " + value);
-  }
+    @SneakyThrows
+    @Given("wait for random amount of time")
+    public void waitForRandomAmountOfTime() {
+        Random random = new Random();
+        sleepDuration = 2000 + random.nextInt(5) * 1000;
+        System.out.println("Thread " + Thread.currentThread().getId() + " pause for " + sleepDuration + " millis");
+        System.out.println("[T] Thread " + Thread.currentThread().getId() + " : " + System.currentTimeMillis());
+        Thread.sleep(sleepDuration);
+        System.out.println("[T] Thread " + Thread.currentThread().getId() + " : " + System.currentTimeMillis());
+    }
 
-  @Then("sample then {string}")
-  public void sampleThen(String value) {
-    System.out.println("Confirming search " + value);
-  }
-
-  @Then("I use multiple params {string} and {int}")
-  public void multiParamStep(String value, Integer someInt) {
-    System.out.println(value + someInt);
-  }
-
-
-  @Given("sample step")
-  public void sampleStep() {
-    System.out.println("I load google page!");
-  }
-
-  @Given("sample list step:")
-  public void sampleList(DataTable strings) {
-    strings.asList().forEach(System.out::println);
-  }
-
-  @Given("sample map step:")
-  public void sampleMap(DataTable strings) {
-    strings.asMap().forEach((key, value) -> System.out.println(key + " : " + value));
-  }
-
-  @Given("sample enum step {}")
-  public void sampleEnum(GoogleSelectors googleSelectors) {
-    System.out.println("I will click " + googleSelectors.getLocator());
-  }
+    @SneakyThrows
+    @Given("random browser stuff {string}")
+    public void randomBrowserStuff(String url) {
+        webDriverLocal.get().get(url);
+        Random random = new Random();
+        sleepDuration = 10000 + random.nextInt(20) * 1000;
+        Thread.sleep(sleepDuration);
+        webDriverLocal.get().get("https://google.com/");
+        webDriverLocal.get().quit();
+    }
 }

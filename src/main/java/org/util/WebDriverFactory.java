@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 public class WebDriverFactory {
 
@@ -28,7 +29,9 @@ public class WebDriverFactory {
     }
 
     private static WebDriver initLocalDriver() {
-        return new ChromeDriver();
+        WebDriver driver = new ChromeDriver(options());
+        driver.manage().window().maximize();
+        return driver;
     }
 
     private static WebDriver initRemoteDriver() throws MalformedURLException {
@@ -40,7 +43,11 @@ public class WebDriverFactory {
     }
 
     private static ChromeOptions options() {
+        Map<String, String> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("deviceName", "Nexus 5");
+
         ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         chromeOptions.addArguments("--remote-allow-origins=*");
         chromeOptions.setCapability("selenoid:options", new HashMap<String, Object>() {{
             put("enableVideo", true);
