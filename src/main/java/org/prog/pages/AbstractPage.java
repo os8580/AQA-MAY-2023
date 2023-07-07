@@ -5,7 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.prog.components.WebDriverFacade;
 
+import javax.annotation.PreDestroy;
 import java.time.Duration;
 import java.util.Set;
 
@@ -52,6 +54,7 @@ public abstract class AbstractPage {
         driver.manage().window().minimize();
     }
 
+    @PreDestroy
     public void quitDriver() {
         if (driver != null) {
             driver.quit();

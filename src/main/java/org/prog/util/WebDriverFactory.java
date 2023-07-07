@@ -1,4 +1,4 @@
-package org.util;
+package org.prog.util;
 
 import lombok.SneakyThrows;
 import org.enums.BrowserType;
@@ -47,7 +47,7 @@ public class WebDriverFactory {
         mobileEmulation.put("deviceName", "Nexus 5");
 
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+//        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         chromeOptions.addArguments("--remote-allow-origins=*");
         chromeOptions.setCapability("selenoid:options", new HashMap<String, Object>() {{
             put("enableVideo", true);

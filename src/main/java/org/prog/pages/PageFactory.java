@@ -1,9 +1,10 @@
 package org.prog.pages;
 
-import org.enums.BrowserType;
 import org.openqa.selenium.WebDriver;
-import org.util.WebDriverFactory;
+import org.springframework.stereotype.Component;
+import org.prog.util.WebDriverFactory;
 
+@Component
 public class PageFactory {
 
     private static final WebDriver driver = WebDriverFactory.getDriver();

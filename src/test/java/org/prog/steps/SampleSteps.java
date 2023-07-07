@@ -2,10 +2,8 @@ package org.prog.steps;
 
 import io.cucumber.java.en.Given;
 import lombok.SneakyThrows;
-import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.util.WebDriverFactory;
+import org.prog.util.WebDriverFactory;
 
 import java.util.Random;
 

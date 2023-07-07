@@ -12,24 +12,22 @@ import org.prog.dto.NameDto;
 import org.prog.pages.GooglePage;
 import org.prog.pages.PageFactory;
 import org.prog.pages.Pages;
-import org.util.DataHolder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.prog.util.DataHolder;
 
 import java.net.Inet4Address;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.testng.AssertJUnit.assertNotNull;
 
 public class WebSteps {
-
-    public static NameDto randomUser;
-
-    public static NameDto randomSender;
-    public static NameDto randomReceiver;
-    public static NameDto randomReceiver_2;
-    public static NameDto randomReceiver_3;
+    @Autowired
+    private DataHolder dataHolder;
 
     private static GooglePage googlePage;
 
@@ -79,7 +77,7 @@ public class WebSteps {
     }
 
     private String getRandomPersonNameLastName(String alias) {
-        NameDto dto = (NameDto) DataHolder.getInstance().getValue(alias);
+        NameDto dto = (NameDto) dataHolder.getValue(alias);
         String searchText = "%s %s";
         assertNotNull("Random user must be assigned before search!", dto);
         return String.format(searchText, dto.getFirst(), dto.getLast());
@@ -96,10 +94,16 @@ public class WebSteps {
     }
 
     private static URL getSelenoidUrl() throws UnknownHostException, MalformedURLException {
+        LinkedList<String> lLinst = new LinkedList<>();
+        smth(lLinst);
         if (Inet4Address.getLocalHost().getHostAddress().startsWith("172")) {
             return new URL("http://selenoid-selenoid-1:4444/wd/hub");
         } else {
             return new URL("http://localhost:4444/wd/hub");
         }
+    }
+
+    private static void smth(List<String> arrayList) {
+
     }
 }

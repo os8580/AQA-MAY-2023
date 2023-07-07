@@ -11,4 +11,9 @@ public class NameDto {
     private String title;
     private String first;
     private String last;
+
+    @Override
+    public String toString() {
+        return first + " " + last;
+    }
 }

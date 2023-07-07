@@ -1,11 +1,13 @@
 package org.prog.steps;
 
 import io.cucumber.java.en.Given;
+import org.prog.db.Persons;
+import org.prog.db.PersonsJpa;
 import org.prog.dto.NameDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
-import org.util.DataHolder;
+import org.prog.util.DataHolder;
 
-import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,24 @@ public class SqlSteps {
 
     private final static Random RANDOM = new Random();
 
+    @Autowired
+    private PersonsJpa personsJpa;
+
+    @Autowired
+    private DataHolder dataHolder;
+
+    @Given("Test spring db")
+    public void smth() {
+        personsJpa.findAll().forEach(p -> {
+            System.out.println(p.getFirstName());
+            System.out.println(p.getLastName());
+        });
+    }
+
     @Given("Get random user from group {string} as {string}")
     public void pickRandomUserFromGroup(String groupAlias, String userAlias) {
-        List<NameDto> groupNames = (List<NameDto>) DataHolder.getInstance().getValue(groupAlias);
-        DataHolder.getInstance().putValue(userAlias, randomPerson(groupNames));
+        List<NameDto> groupNames = (List<NameDto>) dataHolder.getValue(groupAlias);
+        dataHolder.putValue(userAlias, randomPerson(groupNames));
     }
 
     @Given("Get random user from DB as {string}")
@@ -37,7 +53,7 @@ public class SqlSteps {
                 userNames.add(assemblePerson(resultSet));
             }
 
-            DataHolder.getInstance().putValue(alias, randomPerson(userNames));
+            dataHolder.putValue(alias, randomPerson(userNames));
 
             resultSet.close();
             stmt.close();
@@ -57,7 +73,7 @@ public class SqlSteps {
             Statement stmt = con.createStatement();
 
             String query = "insert into Persons (Title, FirstName, LastName) VALUES ('%s', '%s', '%s')";
-            List<NameDto> randomNames = (List<NameDto>) DataHolder.getInstance().getValue(alias);
+            List<NameDto> randomNames = (List<NameDto>) dataHolder.getValue(alias);
 
             for (NameDto randomUserName : randomNames) {
                 try {
@@ -74,6 +90,23 @@ public class SqlSteps {
             e.printStackTrace();
             Assert.fail("SQL Error");
         }
+    }
+
+    @Given("SPRING - I store {string} in DB")
+    public void storeUser(String alias) {
+        ((List<NameDto>) dataHolder.getValue(alias)).stream()
+                .forEach(name -> {
+                    try {
+                        System.out.println("Saving " + name);
+                        personsJpa.save(Persons.builder()
+                                .firstName(name.getFirst())
+                                .lastName(name.getLast())
+                                .title(name.getTitle())
+                                .build());
+                    } catch (Exception e){
+
+                    }
+                });
     }
 
     private NameDto assemblePerson(ResultSet resultSet) throws SQLException {
