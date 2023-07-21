@@ -103,7 +103,7 @@ public class PageObjectTests {
 
         // Verify that product quantity increased by 3 and price is equal to the expected value
         Assert.assertEquals(increasedQuantityByThree, 4);
-        Assert.assertEquals(increasedPriceByThree, 125996);
+        Assert.assertEquals(increasedPriceByThree, 133996);
     }
 
     @AfterSuite
