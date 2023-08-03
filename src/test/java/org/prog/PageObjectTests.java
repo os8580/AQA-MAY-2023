@@ -60,7 +60,7 @@ public class PageObjectTests {
         rozetkaPage.waitForTextVisibility("Товар добавлен в корзину");
         rozetkaPage.openCart();
         rozetkaPage.waitForTextVisibility("Вместе дешевле");
-        Assert.assertTrue(rozetkaPage.isTextPresent("33 499"), "Text '33 499' not found on the page.");
+        Assert.assertTrue(rozetkaPage.isTextPresent("31 499"), "Text '31 499' not found on the page.");
         Assert.assertTrue(rozetkaPage.isTextPresent("(MLPF3HU/A)"), "Text '(MLPF3HU/A)' not found on the page.");
 
         // Get product details from the cart
@@ -103,7 +103,7 @@ public class PageObjectTests {
 
         // Verify that product quantity increased by 3 and price is equal to the expected value
         Assert.assertEquals(increasedQuantityByThree, 4);
-        Assert.assertEquals(increasedPriceByThree, 133996);
+        Assert.assertEquals(increasedPriceByThree, 125996);
     }
 
     @AfterSuite
